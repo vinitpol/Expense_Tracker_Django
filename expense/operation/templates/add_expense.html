@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expense</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add New Expense</h1>
+        <form method="POST" action="{% url 'add_expense' %}">
+            {% csrf_token %}
+            <div>
+                <label for="spender">Spender:</label>
+                <input type="text" name="spender" required><br><br>
+            </div>
+            <div>
+                <label for="amount">Amount:</label>
+                <input type="number" name="amount" min="0" required><br><br>
+            </div>
+            <div>
+                <label for="payment_mode">Payment Mode:</label>
+                <select name="payment_mode" required>
+                    <option value="Cash">Cash</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Card">Card</option>
+                </select><br><br>
+            </div>
+            <div>
+                <label for="payment_status">Payment Status:</label>
+                <select name="payment_status" required>
+                    <option value="Paid">Paid</option>
+                    <option value="UnPaid">UnPaid</option>
+                    <option value="Pending">Pending</option>
+                </select><br><br>
+            </div>
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" name="date" required><br><br>
+            </div>
+            <button type="submit">Add Expense</button>
+            {% comment %} <a href="{% url 'home' %}"><button type="button">Back</button></a> {% endcomment %}
+            <button type="button" onclick="window.location.href='{% url 'home' %}'">Back</button>
+
+        </form>
+    </div>
+</body>
+</html>

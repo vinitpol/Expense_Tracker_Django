@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Expense</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<body>
+    <div class="container2">
+        <h1>Update Expense</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="spender">Spender:</label>
+                <input type="text" id="spender" name="spender" value="{{ expense.spender }}" required>
+            </div><br>
+            
+            <div>
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" value="{{ expense.amount }}" required>
+            </div><br>
+            
+            <div>
+                <label for="">Payment Mode:</label><br><br>
+            <select name="payment_mode" id="payment_mode" required>
+                <option value="cash" {% if expense.payment_mode == 'cash' %}selected{% endif %}>Cash</option>
+                <option value="card" {% if expense.payment_mode == 'card' %}selected{% endif %}>Card</option>
+                <option value="online" {% if expense.payment_mode == 'online' %}selected{% endif %}>Online</option>
+                <option value="upi" {% if expense.payment_mode == 'upi' %}selected{% endif %}>UPI</option>
+            </select><br>
+            </div><br>
+            
+            <div>
+                <label for="">Payment Status:</label><br><br>
+                <select name="payment_status" id="payment_status" required>
+                    <option value="paid" {% if expense.payment_status == 'paid' %}selected{% endif %}>Paid</option>
+                    <option value="unpaid" {% if expense.payment_status == 'unpaid' %}selected{% endif %}>Unpaid</option>
+                    <option value="pending" {% if expense.payment_status == 'pending' %}selected{% endif %}>Pending</option>
+                </select><br>
+            </div><br>
+            
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="{{ expense.date|date:'Y-m-d' }}" required>
+            </div><br>
+            
+            <button type="submit">Update Expense</button>
+            <a href="{% url 'home' %}"><button type="button">Cancel</button></a>
+        </form>
+
+    </div>
+</body>
+
+</html>

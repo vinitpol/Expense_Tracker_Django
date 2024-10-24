@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expence Tracker Management System</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="icon" type="image/png" href="{% static 'tracker_icon.png' %}" sizes="16x16">
+<link rel="icon" type="image/png" href="{% static 'tracker_icon.png' %}" sizes="32x32">
+<link rel="icon" type="image/png" href="{% static 'tracker_icon.png' %}" sizes="48x48">
+<link rel="icon" type="image/png" href="{% static 'tracker_icon.png' %}" sizes="96x96">
+<link rel="apple-touch-icon" href="{% static 'tracker_icon.png' %}" sizes="180x180">
+
+<body>
+    <div class="container">
+        <h1>Expence Tracking</h1>
+        <table id="customers" border="1">
+            <thead>
+                <th>Sr.</th>
+                <th>Spender</th>
+                <th>Amount</th>
+                <th>Payment_mode</th>
+                <th>Payment_status</th>
+                <th>Date</th>
+                <th colspan="2" id="mid">Action</th>
+            </thead>
+            <tbody>
+                {% for x in expense_lst %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{x.spender}}</td>
+                    <td>{{x.amount}}</td>
+                    <td>{{x.payment_mode}}</td>
+                    <td>{{x.payment_status}}</td>
+                    <td>{{x.date}}</td>
+                    <td>
+                        <a href="{% url 'update_expense' x.sr %}"><button id="up">Update</button></a>
+                    </td>
+                    <td>
+                        <form action="{% url 'delete_expense' x.sr %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" id="del"
+                                onclick="return confirm('Are you sure you want to delete this expense?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8">No Record found.</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <br><br>
+        <a href="{% url 'add_expense' %}"><button id="new3">Add Data</button></a>
+    </div>
+</body>
+
+</html>
