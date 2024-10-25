@@ -8,11 +8,6 @@ def home(request):
     expense_lst = ExpenceModel.objects.all()
     return render(request,'home.html',{'expense_lst':expense_lst})
 
-# def add_expense(request):
-
-#     # Your add expense logic
-#     return render(request,'add_expense.html')
-
 def add_expense(request):
     if request.method == 'POST':
         spender = request.POST.get('spender')
@@ -62,24 +57,8 @@ def update_expense(request, expense_sr):
     
     return render(request, 'update_expense.html', {"expense": expense})
 
-def reorder_serial_numbers():
-    """
-    Reorder all expenses to maintain sequential sr numbers.
-    This function updates all records to have sequential sr numbers.
-    """
-    expenses = ExpenceModel.objects.all().order_by('id')
-    with transaction.atomic():
-        for index, expense in enumerate(expenses, start=1):
-            ExpenceModel.objects.filter(id=expense.id).update(sr=index)
-
 def delete_expense(request, expense_sr):
-    """
-    Delete an expense and reorder remaining serial numbers.
-    
-    Args:
-        request: HTTP request object
-        expense_sr: Serial number of the expense to delete
-    """
+    # Perform the delete operation in a transaction
     with transaction.atomic():
         # Get and delete the expense
         expense = get_object_or_404(ExpenceModel, sr=expense_sr)

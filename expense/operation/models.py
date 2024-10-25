@@ -20,9 +20,11 @@ class ExpenceModel (models.Model):
     payment_mode = models.CharField(max_length=100,choices=payment_choise)
     payment_status = models.CharField(max_length=100,choices=payment_status)
     date = models.DateField()
-    class Meta:
-        ordering = ['sr']
+    # class Meta:
+    #     ordering = ['sr']
 
+class Meta:
+        db_table = "expense_table"
 
 
 def __str__(self):
